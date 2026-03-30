@@ -20,9 +20,11 @@ app.use(express.urlencoded({
 
 app.use(cookieParser())
 
-import routes from './routes/user.routes.js'
 
-app.use("/api/v1/users",routes)
+
+import urlRoute from './routes/url.routes.js'
+
+app.use("/api/v1",urlRoute)
 
 
 
