@@ -1,7 +1,7 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-
+// import redisClient from './config/redis.js'
 
 const app=express()
 
@@ -20,9 +20,20 @@ app.use(express.urlencoded({
 
 app.use(cookieParser())
 
+const connectRedis=async()=>{
+  try{
+    await redisClient.connect()
+
+  }catch(error){
+    console.log("error in connecting to redis:",error)
+  }
+}
+
+connectRedis()
 
 
 import urlRoute from './routes/url.routes.js'
+import redisClient from './config/redis.js'
 
 app.use("/api/v1",urlRoute)
 
