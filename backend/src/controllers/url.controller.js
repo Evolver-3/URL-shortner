@@ -62,7 +62,12 @@ const redirectToLongUrl=asyncHandler(async(req,res)=>{
     throw new ApiError(400, "not url fetched !!")
   }
 
+  if(!redisClient.isOpen){
+    await redisClient.connect()
+  }
+
   //redis
+   console.log("Redis Client Status:", redisClient.isOpen)
   const cachedUrl=await redisClient.get(shortId)
 
   if(cachedUrl){
@@ -70,11 +75,16 @@ const redirectToLongUrl=asyncHandler(async(req,res)=>{
     return res.redirect(cachedUrl)
   }
 
-  console.log("Cache Miss")
+
 
   const url=await Url.findOne(
     {shortId}
   )
+  
+  if(!url){
+    throw new ApiError(404, "Url not found")
+  }
+  
   url.clicks+=1;
   url.clickHistory.push(
     {
@@ -84,13 +94,9 @@ const redirectToLongUrl=asyncHandler(async(req,res)=>{
     }
   )
 
-  if(!url){
-    throw new ApiError(404, "Url not found")
-  }
-  
   await url.save()
 
-  console.log("Redis Client Status:", redisClient.isOpen)
+ 
 
 
   await redisClient.set(shortId,url.originalUrl,{
