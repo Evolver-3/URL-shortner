@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+
+
+
+ @theme{
+  --color-primary: oklch(58.6% 0.253 17.585);
+  --color-secondary:oklch(62.7% 0.265 303.9);
+  --color-third:oklch(54.1% 0.281 293.009);
+  --text-first:10px;
+  --text-sec:12px;
+
+  --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --shadow-strong: 0 1px 4px oklch(44.6% 0.043 257.281);
+  --shadow-glow: 0 5px 20px oklch(37.3% 0.034 259.733);
+  --shadow-weird:0px 4px 20px 0px rgba(15,12,12,0.08),0px 8px 12px -4px rgba(15,12,12,0.10),0px 0px 2px 0px rgba(15,12,12,0.10),0px 1px 2px 0px rgba(15,12,12,0.10);
+
+
+  --shadow-finta:0px 8px 12px -4px rgba(15,12,12,0.08),
+  0px 0px 2px 0px rgba(15,12,12,0.10),
+  0px 1px 2px 0px rgba(15,12,12,0.10);
+}
+@layer components {
+  .shadow-soft {
+    @apply shadow-[var(--shadow-soft)];
+  }
+  .shadow-strong {
+    @apply shadow-[var(--shadow-strong)];
+  }
+  .shadow-glow {
+    @apply shadow-[var(--shadow-glow)];
+  }
+  .shadow-weird {
+    @apply shadow-[var(--shadow-weird)];
+  }
+  .shadow-finta {
+    @apply shadow-[var(--shadow-finta)];
+  }
+}
+
+main{
+  @apply perspective-dramatic min-h-screen w-screen bg-black flex flex-col justify-between
+}
+
+
+
+.bod{
+  @apply min-w-sm rounded-xl py-16 flex items-center justify-center  hover:shadow-weird bg-neutral-800   
+}
+
+form{
+  @apply flex flex-col items-center justify-center py-2 gap-5 
+}
+
+input{
+  @apply rounded-full px-3 py-2 placeholder:text-neutral-400 min-w-xs  text-white hover:shadow-strong transition-all duration-300 outline-none hover:placeholder:opacity-0 bg-neutral-700 relative z-10 w-full p-3 
+}
+
+p{
+  @apply text-green-400 font-semibold text-sm hover:text-green-500 active:text-red-500
+}
+
+button{
+  @apply rounded-full w-fit  px-6 py-2 font-bold text-neutral-300 bg-neutral-700 text-lg hover:ring-1 transition-all duration-300 hover:ring-neutral-300 active:ring-1 active:ring-green-600 hover:scale-105 active:scale-95 hover:text-shadow-sm text-shadow-neutral-800 ease-in-out active:text-green-500 cursor-pointer ring-1 ring-neutral-600 inset-shadow-2xs shadow-[inset_0.1px_0.1px_1px_0.4px_#1a202c]
+}
+
+@theme {
+  --animate-spin-slow: spin 6s linear infinite;
+  --animate-spin-reverse: spin 3s linear infinite reverse;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+h3{
+  @apply text-green-400 hover:text-green-500 hover:underline hover:underline-offset-3 cursor-pointer 
+  
+}
