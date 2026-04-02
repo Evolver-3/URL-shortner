@@ -1,11 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "./assets/Url/pages/Home";
+import Desc from './assets/Url/pages/Desc'
 
 export const router=createBrowserRouter(
   [
     {
       path:"/",
       element:<Home/>,
+      errorElement:<ErrorPage/>
+    },
+    {
+      path:"/getAll",
+      element:<Desc/>,
       errorElement:<ErrorPage/>
     }
   ]
