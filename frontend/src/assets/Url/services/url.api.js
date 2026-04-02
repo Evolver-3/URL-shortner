@@ -22,3 +22,15 @@ export async function PutUrl({originalUrl}){
   }
 }
 
+export async function getAllUrls(){
+  try{
+    const res=await api.get("/api/v1/getAll")
+
+
+    return res.data
+
+  }catch(error){
+    consol.log(error)
+    throw error
+  }
+}
