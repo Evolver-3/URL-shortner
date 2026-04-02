@@ -34,10 +34,10 @@ const MovingCard = ({children}) => {
   };
 
   return (
-    <main>
+    <main >
       <Nav/>
   
-     <div className='flex items-center justify-around pt-30 perspective-dramatic'>
+     <div className='flex flex-col md:flex-row w-full  items-center py-12.75  md:py-35 lg:py-30 md:px-5 justify-around  perspective-dramatic gap-10'>
       <Back/>
        <motion.div
       ref={cardRef}
