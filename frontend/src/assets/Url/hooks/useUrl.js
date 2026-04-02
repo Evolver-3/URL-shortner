@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { UrlContext } from "../url.context.jsx";
-import { PutUrl } from "../services/url.api.js";
+import { PutUrl,getAllUrls} from "../services/url.api.js";
 
 export const useUrl=()=>{
   
   const context=useContext(UrlContext)
 
-  const {urls,setUrls}=context
+  const {urls,setUrls,allUrls,setAllUrls}=context
+
+  
 
   const handleInputUrl=async({originalUrl})=>{
     try{
@@ -23,7 +25,23 @@ export const useUrl=()=>{
   }
 
 
+  const handleInputAllUrl=async()=>{
+    try{
+      const data=await getAllUrls()
+
   
-  return {urls,setUrls,handleInputUrl}
+
+       setAllUrls(data.data)
+
+    }catch(error){
+      console.log("Url not found", error)
+      return false
+       
+      
+    }
+  }
+
+  
+  return {urls,setUrls,handleInputUrl,allUrls,setAllUrls,handleInputAllUrl}
 }
 
