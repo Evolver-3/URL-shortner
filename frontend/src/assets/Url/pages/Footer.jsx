@@ -12,11 +12,11 @@ const Footer = () => {
       <h2 className='text-center text-md '> Made By <span className='text-red-500 text-semibold'>Ashu</span></h2>
       </div>
 
-      <div className='flex gap-8 text-sm'>
+      <div className='grid grid-cols-2 md:grid-cols-4 gap-x-20 gap-y-1 text-[14px]'>
         <h3><Link to={'/'}>Shorten</Link></h3>
         <h3>Terms of Service</h3>
-        <h3>Privacy</h3>
-        <h3 className='' onClick={()=>setOpenContact(!openContact)}>Contact</h3>
+         
+        <h3 className=''><Link to={"/contact"}>Contact</Link></h3>
         <h3><Link to={"/getAll"}>Get Description</Link></h3>
       </div>
     </div>

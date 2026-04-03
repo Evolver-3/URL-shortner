@@ -1,10 +1,10 @@
 import {motion} from 'motion/react'
 import {useState,useRef} from 'react'
-import Back from './Back.jsx';
-import Nav from './Nav.jsx'
-import Footer from './Footer.jsx';
+import Back from '../Back.jsx';
+import Nav from '../Nav.jsx'
+import Footer from '../Footer.jsx';
 
-const MovingCard = ({children}) => {
+const MovingCard = ({children,headings}) => {
 
   const [mousePos, setMousePos]=useState({x:0,y:0})
   const [isHovering, setIsHovering] = useState(false);
@@ -37,8 +37,8 @@ const MovingCard = ({children}) => {
     <main >
       <Nav/>
   
-     <div className='flex flex-col md:flex-row w-full  items-center py-12.75  md:py-35 lg:py-30 md:px-5 justify-around  perspective-dramatic gap-10'>
-      <Back/>
+     <div className='flex flex-col md:flex-row w-full py-10 items-center flex-1  md:py-15 lg:py-10 md:px-5 justify-around  perspective-dramatic gap-10'>
+      {headings}
        <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
