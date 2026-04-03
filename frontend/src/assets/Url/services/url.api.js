@@ -34,3 +34,19 @@ export async function getAllUrls(){
     throw error
   }
 }
+
+export async function getMessages({username,email,message}){
+
+  try{
+    
+    const res=await api.post("/api/v1/contact",{username,email,message})
+
+    console.log("Getting messages:", res.data)
+    return res.data
+
+  }catch(error){
+    console.log(error)
+    throw error
+  }
+
+}
