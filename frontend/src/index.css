@@ -44,7 +44,7 @@ main{
 
 .bod{
   @apply min-w-sm rounded-xl flex items-center justify-center hover:shadow-weird bg-neutral-800
-  py-10 lg:py-15 lg:px-10   
+  py-10 lg:py-15 lg:px-10  relative 
 }
 
 .test{

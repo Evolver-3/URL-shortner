@@ -18,7 +18,7 @@ const Contact = () => {
 
   const handleSubmit=async(e)=>{
     e.preventDefault()
-    
+    setLoading(true)
     const success=await handleGettingMessage({username,email,message})
 
     setLoading(false)
