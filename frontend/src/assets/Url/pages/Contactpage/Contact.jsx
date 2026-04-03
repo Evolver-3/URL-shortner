@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useUrl } from '../../hooks/useUrl'
 
 import MovingCard from '../FrontPage/MovingCard'
-import AllComp from '../AllUrl/AllComp'
-import Nav from '../Nav'
-import Footer from '../Footer'
+
 
 
 const Contact = () => {
   const [username,setUserName]=useState("")
   const [email,setEmail]=useState("")
   const [message,setMessage]=useState("")
+
+  const [status,setStatus]=useState(null)
+  const [loading,setLoading]=useState(false)
 
   const {handleGettingMessage}=useUrl()
 
@@ -20,27 +21,42 @@ const Contact = () => {
     
     const success=await handleGettingMessage({username,email,message})
 
-    if(success){
-      return <h2>this is it</h2>
-    }
-
-   
+    setLoading(false)
+    setStatus(success ? "success" : "error")
   }
+
+  useEffect(()=>{
+    if(status){
+      const timer=setTimeout(() => setStatus(null), 4000);
+      return()=>clearTimeout(timer)
+    }
+  },[status])
+
   return (
     <main  className=''>
 
     <MovingCard headings={<Data/>}>
 
+    {status === "success" &&(
+      <div className='fixed top-5 right-5 bg-green-300 rounded-xl px-1 py-0.5 text-green-600 text-sm shadow-lg'>Message sent successfully</div>
+    )}
+
+    {status==="error" &&(
+      <div className='fixed top-5 right-5 bg-red-300 rounded-xl px-1 py-0.5 text-red-600 text-sm shadow-lg'>
+        Failed to send message
+      </div>
+    )}
+
       <div className='mx-10'>
       
-      <form onClick={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input type='text' name='name' placeholder='Name' onChange={(e)=>(setUserName(e.target.value))}/>
         
         <input type="email" name="email" placeholder='E-mail' onChange={(e)=>(setEmail(e.target.value))}/>
 
         <textarea type='text' onChange={(e)=>(setMessage(e.target.value))}/>
 
-          <button>Send</button>
+          <button disabled={loading}>{loading ? "Sending..." :"Send"}</button>
       </form>
 
       
