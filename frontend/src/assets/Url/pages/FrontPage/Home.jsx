@@ -45,9 +45,9 @@ const Home = () => {
         
        
           {urls?.shortId &&(
-            <a href={`http://localhost:5000/api/v1/r/${urls.shortId}`}>
+            <a href={`https://url-shortner-tpcv.onrender.com/api/v1/r/${urls.shortId}`}>
               <h2 className='text-neutral-400 font-bold'>Short Url:
-                <span className='text-green-400 font-extralight hover:text-red-400 active:text-red-500 transition-all  duration-300'> {`http://localhost:5000/${urls.shortId}`}</span>
+                <span className='text-green-400 font-extralight hover:text-red-400 active:text-red-500 transition-all  duration-300'> {`https://url-shortner-tpcv.onrender.com/${urls.shortId}`}</span>
               </h2>
             </a>
           )}
