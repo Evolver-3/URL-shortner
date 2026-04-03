@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Url } from "../models/url.model.js";
 import {nanoid} from 'nanoid'
 import redisClient from "../config/redis.js";
+import { UserContact} from '../models/contact.model.js'
 
 
 
@@ -62,9 +63,9 @@ const redirectToLongUrl=asyncHandler(async(req,res)=>{
     throw new ApiError(400, "not url fetched !!")
   }
 
-  if(!redisClient.isOpen){
-    await redisClient.connect()
-  }
+  // if(!redisClient.isOpen){
+  //   await redisClient.connect()
+  // }
 
   //redis
    console.log("Redis Client Status:", redisClient.isOpen)
@@ -74,9 +75,6 @@ const redirectToLongUrl=asyncHandler(async(req,res)=>{
     console.log("Cache hit")
     return res.redirect(cachedUrl)
   }
-
-
-
   const url=await Url.findOne(
     {shortId}
   )
@@ -100,11 +98,59 @@ const redirectToLongUrl=asyncHandler(async(req,res)=>{
 
 
   await redisClient.set(shortId,url.originalUrl,{
-    EX:3600
+    EX:60*60*24*3
   })
 
   return res.status(302).redirect(url.originalUrl)
 })
 
 
-export {updateLongUrl,redirectToLongUrl}
+const getAllUrls=asyncHandler(async(req,res)=>{
+
+  const urls=await Url.find().limit(6).select("originalUrl shortId clicks")
+
+  if(!urls){
+    throw new ApiError(404, "No url found")
+  }
+
+  console.log(urls)
+  return res.status(200).json(
+    new ApiResponse(200, urls, "All Url's fetched")
+  )
+})
+
+const getContact=asyncHandler(async(req,res)=>{
+
+  const {username,email,message}= req.body
+
+  if(!username || !email || !message){
+    throw new ApiError(404,"Entries are required")
+  }
+
+  const contact=await UserContact.create(
+    {
+      username,
+      email,
+      message,
+      ipAddress:req.ip,
+      userAgent:req.headers["user-agent"]
+    }
+  )
+
+  if(!contact){
+    throw new ApiError(409,"Somthing went wrong when sending message")
+  }
+
+  console.log("Message: ", contact)
+
+  return res.status(201).json(
+    new ApiResponse(201,contact,"Message sent successfully")
+  )
+
+
+
+})
+
+
+
+export {updateLongUrl,redirectToLongUrl,getAllUrls,getContact}
